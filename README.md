@@ -1,18 +1,12 @@
-# Pagination Example Template
+# Pagan
 
-Set-up:
-
-``` bash
-git clone https://github.com/brandur/pagination-template
-gem install foreman
-bundle install
-foreman run
-```
-
-To edit the application being run:
+## Setup
 
 ```
-vi app.rb
+bundle
+bundle exec rake init
+bundle exec rake load_fixtures
+bundle exec ruby app.rb
 ```
 
 ## Run Tests
@@ -21,17 +15,8 @@ vi app.rb
 bundle exec rake
 ```
 
-## Database
-
-Optionally, get the database bootstrapped with the following:
-
-``` bash
-brew install postgres # or as applicable for system
-createdb pagination-template
-```
-
-To access the newly created database:
+## Command Line
 
 ```
-psql pagination-template
+curl -H "Range: name ]plain..sourcream; max=5, order=asc" localhost:4567
 ```

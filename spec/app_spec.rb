@@ -1,11 +1,6 @@
-require "minitest"
-require "minitest/autorun"
-require "minitest/spec"
-require "rack/test"
+require "spec_helper"
 
-require "app"
-
-describe "Paginated App" do
+describe "Pagan App" do
   include Rack::Test::Methods
 
   def app
@@ -15,6 +10,6 @@ describe "Paginated App" do
   it "says hello" do
     get "/"
     assert_equal 200, last_response.status
-    assert_match /hello/i, last_response.body
+    assert_match /id/i, last_response.body
   end
 end
