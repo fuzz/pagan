@@ -7,7 +7,14 @@ describe "Pagan App" do
     Sinatra::Application
   end
 
-  it "says hello" do
+  it "responds properly without a Range header" do
+    get "/"
+    assert_equal 200, last_response.status
+    assert_match /id/i, last_response.body
+  end
+
+  it "responds properly with a Range header" do
+    header "Range", "id ]5..10; max=5, order=desc"
     get "/"
     assert_equal 200, last_response.status
     assert_match /id/i, last_response.body
