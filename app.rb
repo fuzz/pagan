@@ -2,29 +2,16 @@ require "json"
 require "sequel"
 require "sinatra"
 
-require_relative "lib/range_parser"
+require "pagan"
 
 DB = Sequel.connect("postgres://localhost/pagan")
 
 get "/" do
   range = RangeParser.parse request.env["HTTP_RANGE"] || {}
 
-  set_headers(range)
+  set_headers range
 
-  get_zapps(range)
-end
-
-def get_zapps(range)
-  field  = range[:field].to_sym
-  order  = range[:order] == "asc" ? Sequel.asc(field) : Sequel.desc(field)
-
-  if range[:exclusive]
-    zapps = DB[:zapps].order(order).limit(range[:max]).where(field => range[:start]...range[:finish])
-  else
-    zapps = DB[:zapps].order(order).limit(range[:max]).where(field => range[:start]..range[:finish])
-  end
-
-  zapps.all.to_json
+  Zapps.get range
 end
 
 def set_headers(range)
