@@ -12,7 +12,7 @@ module Pagan
           zapps = DB[:zapps].order(order).limit(range[:max]).where(field => range[:start]..range[:finish])
         end
 
-        zapps.all.to_json
+        zapps.all
       end
     end
     extend ModuleFunctions

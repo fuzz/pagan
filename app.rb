@@ -10,7 +10,7 @@ get "/" do
 
   set_headers range
 
-  Pagan::Zapps.get range
+  Pagan::Zapps.get(range).to_json
 end
 
 def set_headers(range)
