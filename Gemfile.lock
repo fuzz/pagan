@@ -1,3 +1,10 @@
+PATH
+  remote: .
+  specs:
+    pagan (0.0.1)
+      pg
+      sequel
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -15,7 +22,7 @@ GEM
     rack-test (0.6.2)
       rack (>= 1.0)
     rake (10.3.2)
-    sequel (4.11.0)
+    sequel (4.15.0)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -27,10 +34,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler (~> 1.7)
   minitest
-  pg
+  pagan!
   pry
   rack-test
-  rake
-  sequel
+  rake (~> 10.0)
   sinatra

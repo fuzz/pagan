@@ -1,2 +1,4 @@
 # Mac OSX specific
 .DS_Store
+
+Gemfile.lock
