@@ -3,10 +3,16 @@ require "pagan"
 require "sequel"
 require "sinatra"
 
+require "pry"
+
 DB = Sequel.connect("postgres://localhost/pagan")
 
 get "/" do
-  range = Pagan::RangeParser.parse request.env["HTTP_RANGE"] || {}
+  if request.env["HTTP_RANGE"]
+    range = Pagan::RangeParser.parse request.env["HTTP_RANGE"]
+  else
+    range = {}
+  end
 
   set_headers range
 

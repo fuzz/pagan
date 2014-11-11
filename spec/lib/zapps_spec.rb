@@ -1,8 +1,9 @@
 require "spec_helper"
 
 # Load test data using "rake init" and "rake load_fixtures"
-# [ {id: 1, "sourcream"}, {id: 2, "saltandvinegar"}, {id: 3, "plain"},
-#   {id: 4, "jalapeno"},  {id: 5, "honeymustard"}  , {id: 6, "bbq"} ]
+# [ {id: 1, name: "sourcream"},    {id: 2, name: "saltandvinegar"},
+#   {id: 3, name: "plain"},        {id: 4, name: "jalapeno"}, 
+#   {id: 5, name: "honeymustard"}, {id: 6, name: "bbq"} ]
 
 first_record_in_range = {id: 2, name: "saltandvinegar"}
 last_record_in_range  = {id: 5, name: "honeymustard"}
@@ -47,6 +48,29 @@ describe "Pagan::Zapps" do
       expected_record = {id: 4, name: "jalapeno"}
 
       assert_equal expected_record, results.last
+    end
+
+    it "excludes the finish record upon request" do
+      @range[:exclusive] = true
+      results = Pagan::Zapps.get @range
+      expected_record = {id: 4, name: "jalapeno"}
+
+      assert_equal expected_record, results.last
+    end
+
+    it "only returns the requested number of records" do
+      @range[:max] = 2
+      results = Pagan::Zapps.get @range
+      expected_record = {id: 3, name: "plain"}
+
+      assert_equal expected_record, results.last
+    end
+
+    it "uses :id if not passed a field" do
+      @range[:field] = ""
+      results = Pagan::Zapps.get @range
+
+      assert_equal first_record_in_range, results.first
     end
   end
 end
