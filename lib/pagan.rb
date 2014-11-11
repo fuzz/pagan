@@ -1,2 +1,2 @@
-require "pagan/range_parser"
-require "pagan/zapps"
+require_relative "pagan/range_parser"
+require_relative "pagan/zapps"

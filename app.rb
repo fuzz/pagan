@@ -2,7 +2,7 @@ require "json"
 require "sequel"
 require "sinatra"
 
-require "pagan"
+require_relative "lib/pagan"
 
 DB = Sequel.connect("postgres://localhost/pagan")
 
