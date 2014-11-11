@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Pagan::VERSION
   spec.authors       = ["Fuzz Leonard"]
   spec.email         = ["fuzz@fuzzleonard.com"]
-  spec.summary       = %q{Zapp tracker}
-  spec.description   = %q{A zapp tracker.}
+  spec.summary       = %q{Zapps tracker}
+  spec.description   = %q{A zapps tracker.}
   spec.homepage      = "https://github.com/fuzz/pagan"
   spec.license       = "MIT"
 

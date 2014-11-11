@@ -72,5 +72,15 @@ describe "Pagan::Zapps" do
 
       assert_equal first_record_in_range, results.first
     end
+
+    it "sorts on any field" do
+      @range[:field]  = "name"
+      @range[:start]  = "jalapeno"
+      @range[:finish] = "plain"
+      results = Pagan::Zapps.get @range
+      expected_record = {id: 4, name: "jalapeno"}
+
+      assert_equal expected_record, results.first
+    end
   end
 end
