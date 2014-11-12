@@ -82,5 +82,30 @@ describe "Pagan::Zapps" do
 
       assert_equal expected_record, results.first
     end
+
+    it "starts at the beginning if no start range is given" do
+      @range[:start] = nil
+      results = Pagan::Zapps.get @range
+      expected_record = {id: 1, name: "sourcream"}
+
+      assert_equal expected_record, results.first
+    end
+
+    it "finishes at the end if no finish range is given" do
+      @range[:finish] = nil
+      results = Pagan::Zapps.get @range
+      expected_record = {id: 6, name: "bbq"}
+
+      assert_equal expected_record, results.last
+    end
+
+    it "excludes last record if no start range and exclusive is true" do
+      @range[:start]     = nil
+      @range[:exclusive] = true
+      results = Pagan::Zapps.get @range
+      expected_record = {id: 4, name: "jalapeno"}
+
+      assert_equal expected_record, results.last
+    end
   end
 end

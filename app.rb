@@ -3,8 +3,6 @@ require "pagan"
 require "sequel"
 require "sinatra"
 
-require "pry"
-
 DB = Sequel.connect("postgres://localhost/pagan")
 
 get "/" do
@@ -19,6 +17,7 @@ get "/" do
   Pagan::Zapps.get(range).to_json
 end
 
+# TODO horribly broken
 def set_headers(range)
   headers["Content-Range"] = "#{range[:field]} #{range[:start]}..#{range[:finish]}"
 
