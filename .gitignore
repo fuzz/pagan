@@ -1,4 +1,3 @@
-# Mac OSX specific
 .DS_Store
-
+coverage/
 Gemfile.lock
