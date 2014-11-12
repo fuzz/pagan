@@ -13,18 +13,26 @@ module Pagan
 
         if !range[:start] && !range[:finish]
           zapps = DB[:zapps].order(order).limit(range[:max])
-        elsif !range[:start]
-          if range[:exclusive]
-            zapps = DB[:zapps].order(order).limit(range[:max]).where{"#{field} <  #{range[:finish]}"}
-          else
-            zapps = DB[:zapps].order(order).limit(range[:max]).where{"#{field} <= #{range[:finish]}"}
-          end
-        elsif !range[:finish]
-          zapps = DB[:zapps].order(order).limit(range[:max]).where{"#{field} >= #{range[:start]}"}
-        elsif range[:exclusive]
-          zapps = DB[:zapps].order(order).limit(range[:max]).where(field => range[:start]...range[:finish])
+
         else
-          zapps = DB[:zapps].order(order).limit(range[:max]).where(field => range[:start]..range[:finish])
+          if !range[:start]
+            if range[:exclusive]
+              where = "#{field} <  #{range[:finish]}"
+            else
+              where = "#{field} <= #{range[:finish]}"
+            end
+
+          elsif !range[:finish]
+            where = "#{field} >= #{range[:start]}"
+
+          elsif range[:exclusive]
+            where = "(#{field} >= '#{range[:start]}') and (#{field} <  '#{range[:finish]}')"
+
+          else
+            where = "(#{field} >= '#{range[:start]}') and (#{field} <= '#{range[:finish]}')"
+          end
+
+          zapps = DB[:zapps].order(order).limit(range[:max]).where{"#{where}"}
         end
 
         zapps.all
