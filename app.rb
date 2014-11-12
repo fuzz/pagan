@@ -9,21 +9,29 @@ get "/" do
   if request.env["HTTP_RANGE"]
     range = Pagan::RangeParser.parse request.env["HTTP_RANGE"]
   else
-    range = {}
+    range = {
+      field: "id",
+      max:   "200",
+      order: "asc"
+    }
   end
 
-  set_headers range
+  results = Pagan::Zapps.get(range)
 
-  Pagan::Zapps.get(range).to_json
+  set_headers range, results
+
+  results.to_json
 end
 
-# TODO horribly broken
-def set_headers(range)
-  headers["Content-Range"] = "#{range[:field]} #{range[:start]}..#{range[:finish]}"
+def set_headers(range, results)
+  start  = results.first[range[:field].to_sym]
+  finish = results.last[range[:field].to_sym]
+
+  headers["Content-Range"] = "#{range[:field]} #{start}..#{finish}"
 
   if range[:exclusive]
-    headers["Next-Range"]  = "]#{range[:finish]}; max=#{range[:max]}, order=#{range[:order]}"
+    headers["Next-Range"]  = "]#{finish}; max=#{range[:max]}, order=#{range[:order]}"
   else
-    headers["Next-Range"]  = "#{range[:finish]}; max=#{range[:max]}, order=#{range[:order]}"
+    headers["Next-Range"]  = "#{finish}; max=#{range[:max]}, order=#{range[:order]}"
   end
 end
